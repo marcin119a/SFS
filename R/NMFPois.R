@@ -2,12 +2,14 @@
 
 library(SQUAREM)
 
-# Function for calculating the generalised Kullback Leibler divergence
-# 
-# @param y Observation
-# @param mu Estimate
-# 
-# @return Generalized Kullback-Leibler
+#' Function for calculating the generalised Kullback Leibler divergence
+#' 
+#' Internal function used in NMFPois
+#' 
+#' @param y Observation
+#' @param mu Estimate
+#' 
+#' @return Generalized Kullback-Leibler
 gkl.dev <- function(y, mu){
   r <- mu
   p <- which(y > 0)
@@ -23,8 +25,9 @@ gkl.dev <- function(y, mu){
 #' 
 #' @param M Non-negative data matrix of size
 #' @param N Small dimension of the two new matrices
+#' @param seed  Vector of random seeds to initialize the matrices
+#' @param arrange Arranging columns in P and rows in E after largest row sums of E 
 #' @param tol Maximum change of P and E when stopping 
-#' @param seed  - Vector of random seeds to initialize the matrices
 #'
 #' @return A list of the matrices derived by the factorization and the corresponding generalized Kullback-Leibler
 #'  \itemize{

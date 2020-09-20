@@ -15,7 +15,9 @@ NMFPois(M, N, seed = sample(1:100, 3), arrange = TRUE, tol = 1e-05)
 
 \item{N}{Small dimension of the two new matrices}
 
-\item{seed}{- Vector of random seeds to initialize the matrices}
+\item{seed}{Vector of random seeds to initialize the matrices}
+
+\item{arrange}{Arranging columns in P and rows in E after largest row sums of E}
 
 \item{tol}{Maximum change of P and E when stopping}
 }
