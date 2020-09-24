@@ -1,5 +1,5 @@
 ---
-title: "introduction"
+title: "SFS package"
 author: "Ragnhild Laursen"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -44,11 +44,15 @@ install.packages("RcppArmadillo")
 
 The most simple way to install the package is using the package \textbf{devtools}.
 
-```{r, eval = FALSE}
+```{r}
 library(devtools)
+library(Rcpp)
+library(RcppArmadillo)
 devtools::install_github("ragnhildlaursen/SFS")
 library(SFS)
 ```
+
+## Example of how to use functions
 To illustrate the functions let us assume we have given a matrix of data $M (4 \times 6)$
 ```{r}
 M = matrix(c(20, 3, 24, 19,  2, 15, 
@@ -67,7 +71,20 @@ initial.fit$E
 inital.fit$P%*%initial.fit$E #approximation of M
 ```
 
-Now, as an initial solution has been constructed one can find the $SFS$ with the function \texttt{sampleSFS}. 
+Now, as an initial solution has been constructed one can find the $SFS$ with the function \texttt{sampleSFS}. Here, we just need the initial solutions of $P$ and $E$. 
+
+```{r,eval = FALSE}
+sfs.result = sampleSFS(inital.fit$P,initial.fit$E) 
+
+```
+
+The results of the SFS can now be illustated by the function \texttt{plotSFS} function by setting the whole output from sampleSFS as input.
+
+```{r, eval = FALSE}
+plotSFS(sfs.result)
+```
+
+
 
 
 
