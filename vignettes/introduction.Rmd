@@ -64,23 +64,23 @@ M = matrix(c(20, 3, 24, 19,  2, 15,
 
 First, we need to create an initial NMF solution which is made using the function \texttt{NMFPois}. The input for this function is a matrix $M$ and a rank $N$, that we here choose to be $3$.
 
-```{r, eval = FALSE}
+```{r}
 initial.fit = NMFPois(M,3)
-inital.fit$P
+initial.fit$P
 initial.fit$E
-inital.fit$P%*%initial.fit$E #approximation of M
+initial.fit$P%*%initial.fit$E #approximation of M
 ```
 
 Now, as an initial solution has been constructed one can find the $SFS$ with the function \texttt{sampleSFS}. Here, we just need the initial solutions of $P$ and $E$. 
 
-```{r,eval = FALSE}
-sfs.result = sampleSFS(inital.fit$P,initial.fit$E) 
+```{r}
+sfs.result = sampleSFS(initial.fit$P,initial.fit$E) 
 
 ```
 
 The results of the SFS can now be illustated by the function \texttt{plotSFS} function by setting the whole output from sampleSFS as input.
 
-```{r, eval = FALSE}
+```{r}
 plotSFS(sfs.result)
 ```
 

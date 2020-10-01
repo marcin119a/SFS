@@ -6,8 +6,9 @@ Date: 2020-09-20
 Author: Ragnhild Laursen
 Maintainer: Ragnhild Laursen <ragnhild@math.au.dk>
 Description: The package include both a function \emph{NMFPois}, that finds an initial non-negative matrix factorization(NMF) 
-  and a function \emph{sampleSFS} that can recover the whole set of feasible solutions given an initial solution.
+  and a function \emph{sampleSFS} that can recover the whole set of feasible solutions given an initial solution. 
+  Other than that there is two function used for plots \emph{samplesToSVD} and \emph{plotSFS}.
 License: MIT + file LICENSE
-Imports: Rcpp (>= 1.0.5), SQUAREM, ggplot2, ggpubr, scales
+Imports: Rcpp (>= 1.0.5), SQUAREM, ggplot2, scales
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.1.1.9000

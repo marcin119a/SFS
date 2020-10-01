@@ -1,9 +1,8 @@
 #' @import ggplot2
-#' @import ggpubr
 #' @import stats
 require(scales)
 library(ggplot2)
-library(ggpubr)
+
 
 #' Plotting the set of feasible solutions
 #' 
@@ -70,7 +69,11 @@ plotSFS = function(sampleSFSOutput){
     ylab("Probability")+xlab(" ")+ggtitle("   Normalized entries of E")+
     scale_y_continuous(labels = scales::percent_format(accuracy = 1), breaks = c(0,0.5,1))+
     coord_flip()
-  finalplot = ggarrange(g1,g2, labels = c("(A)","(B)"), widths = c(K/2, N*7)) 
-  return(finalplot)
+
+  Output = list()
+  Output$Pplot = g1
+  Output$Eplot = g2
+  
+  return(Output)
   
 }
