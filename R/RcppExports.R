@@ -23,7 +23,7 @@
 #'         \item E_lastCheckResults - results of E for the last 'check' iterations 
 #'         }
 #'
-sampleSFS <- function(P, E, maxIter = 10^5L, check = 1000L, beta = 0.5, eps = 0.00001) {
+sampleSFS <- function(P, E, maxIter = 10^5L, check = 1000L, beta = 0.5, eps = 1e-10) {
     .Call(`_SFS_sampleSFS`, P, E, maxIter, check, beta, eps)
 }
 

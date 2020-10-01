@@ -44,7 +44,7 @@ install.packages("RcppArmadillo")
 
 The most simple way to install the package is using the package \textbf{devtools}.
 
-```{r}
+```{r,eval = FALSE}
 library(devtools)
 library(Rcpp)
 library(RcppArmadillo)
@@ -81,7 +81,9 @@ sfs.result = sampleSFS(initial.fit$P,initial.fit$E)
 The results of the SFS can now be illustated by the function \texttt{plotSFS} function by setting the whole output from sampleSFS as input.
 
 ```{r}
-plotSFS(sfs.result)
+plots = plotSFS(sfs.result)
+plots$Pplot
+plots$Eplot
 ```
 
 

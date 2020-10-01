@@ -4,7 +4,7 @@
 \alias{sampleSFS}
 \title{Finds the SFS from a given solution of P and E}
 \usage{
-sampleSFS(P, E, maxIter = 10^5L, check = 1000L, beta = 0.5, eps = 1e-05)
+sampleSFS(P, E, maxIter = 10^5L, check = 1000L, beta = 0.5, eps = 1e-10)
 }
 \arguments{
 \item{P}{One of the factorized two matrices, which will control the stopping criteria}
