@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ragnhild Laursen" />
 
-<meta name="date" content="2020-09-24" />
+<meta name="date" content="2020-11-09" />
 
 <title>SFS package</title>
 
@@ -32,6 +32,54 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -319,7 +367,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">SFS package</h1>
 <h4 class="author">Ragnhild Laursen</h4>
-<h4 class="date">2020-09-24</h4>
+<h4 class="date">2020-11-09</h4>
 
 
 
@@ -330,8 +378,15 @@ M \approx PE.
 \end{equation*}\]</span> Other solutions with the same approximation could be construct with an invertible matrix <span class="math inline">\(A(N \times N)\)</span> such that <span class="math display">\[\begin{equation*}
     \tilde{P} = PA \geq 0 \quad \tilde{E} = A^{-1}E \geq 0,
 \end{equation*}\]</span> are new solutions. There exist trivial ambiguities where <span class="math inline">\(A\)</span> is either a diagonal matrix or a permutation matrix, but besides these trivial ambiguities others could exist as well. The scaling ambiguity is removed by assuming the columns of <span class="math inline">\(P\)</span> sum to one. The goal of the main function  in this package is to approximate the whole SFS that exist for <span class="math inline">\(P\)</span> and <span class="math inline">\(E\)</span> besides the ambiguities. The advantage of this algorithm is that is has a simple implementation and can be applied for an arbitrary dimension of <span class="math inline">\(N\)</span>. A further desciption can be found in the corresponding paper .</p>
-The package includes the following functions:
-
+<p>The package includes the following functions:</p>
+<ul>
+<li><code>sampleSFS</code> is the main function that can find the SFS from an initial NMF</li>
+<li><code>NMFPois</code> can find an initial NMF solution from a data matrix</li>
+<li><code>gkl.dev</code> is an internal function for <code>NMFPois</code>, that calculates the generalized Kullback-Leibler</li>
+<li><code>plotSFS</code> will plot the SFS<br />
+</li>
+<li><code>samplesToSVD</code> will transform SFS solutions from <code>sampleSFS</code> relative to SVD solution</li>
+</ul>
 </div>
 <div id="workflow-of-the-package" class="section level1">
 <h1>Workflow of the package</h1>
@@ -341,51 +396,53 @@ The package includes the following functions:
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="kw">install.packages</span>(<span class="st">&quot;SQUAREM&quot;</span>)</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">install.packages</span>(<span class="st">&quot;ggpubr&quot;</span>)</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">install.packages</span>(<span class="st">&quot;Rcpp&quot;</span>)</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">install.packages</span>(<span class="st">&quot;RcppArmadillo&quot;</span>)</span></code></pre></div>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">install.packages</span>(<span class="st">&quot;Rcpp&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">install.packages</span>(<span class="st">&quot;RcppArmadillo&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;ragnhildlaursen/SFS&quot;</span>)</span></code></pre></div>
 <p>The most simple way to install the package is using the package .</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">library</span>(devtools)</span></code></pre></div>
 <pre><code>## Loading required package: usethis</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">library</span>(Rcpp)</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">library</span>(RcppArmadillo)</span>
-<span id="cb4-3"><a href="#cb4-3"></a>devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;ragnhildlaursen/SFS&quot;</span>)</span></code></pre></div>
-<pre><code>## Skipping install of &#39;SFS&#39; from a github remote, the SHA1 (a648ef7d) has not changed since last install.
-##   Use `force = TRUE` to force installation</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">library</span>(SFS)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">library</span>(SQUAREM)</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="kw">library</span>(Rcpp)</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="kw">library</span>(RcppArmadillo)</span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="kw">library</span>(SFS)</span></code></pre></div>
 </div>
 <div id="example-of-how-to-use-functions" class="section level2">
 <h2>Example of how to use functions</h2>
 <p>To illustrate the functions let us assume we have given a matrix of data <span class="math inline">\(M (4 \times 6)\)</span></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>M =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">3</span>, <span class="dv">24</span>, <span class="dv">19</span>,  <span class="dv">2</span>, <span class="dv">15</span>, </span>
-<span id="cb7-2"><a href="#cb7-2"></a>             <span class="dv">9</span>, <span class="dv">14</span>, <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">15</span>, <span class="dv">10</span>,</span>
-<span id="cb7-3"><a href="#cb7-3"></a>             <span class="dv">30</span>, <span class="dv">6</span>, <span class="dv">12</span>, <span class="dv">10</span>, <span class="dv">11</span>,  <span class="dv">7</span>,</span>
-<span id="cb7-4"><a href="#cb7-4"></a>             <span class="dv">9</span>, <span class="dv">27</span>, <span class="dv">5</span>, <span class="dv">11</span>, <span class="dv">19</span>, <span class="dv">15</span>),</span>
-<span id="cb7-5"><a href="#cb7-5"></a>           <span class="dt">nrow =</span> <span class="dv">4</span>, <span class="dt">ncol =</span> <span class="dv">6</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>M =<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">c</span>(<span class="dv">20</span>, <span class="dv">3</span>, <span class="dv">24</span>, <span class="dv">19</span>,  <span class="dv">2</span>, <span class="dv">15</span>, </span>
+<span id="cb5-2"><a href="#cb5-2"></a>             <span class="dv">9</span>, <span class="dv">14</span>, <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">15</span>, <span class="dv">10</span>,</span>
+<span id="cb5-3"><a href="#cb5-3"></a>             <span class="dv">30</span>, <span class="dv">6</span>, <span class="dv">12</span>, <span class="dv">10</span>, <span class="dv">11</span>,  <span class="dv">7</span>,</span>
+<span id="cb5-4"><a href="#cb5-4"></a>             <span class="dv">9</span>, <span class="dv">27</span>, <span class="dv">5</span>, <span class="dv">11</span>, <span class="dv">19</span>, <span class="dv">15</span>),</span>
+<span id="cb5-5"><a href="#cb5-5"></a>           <span class="dt">nrow =</span> <span class="dv">4</span>, <span class="dt">ncol =</span> <span class="dv">6</span>)</span></code></pre></div>
 <p>First, we need to create an initial NMF solution which is made using the function . The input for this function is a matrix <span class="math inline">\(M\)</span> and a rank <span class="math inline">\(N\)</span>, that we here choose to be <span class="math inline">\(3\)</span>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>initial.fit =<span class="st"> </span><span class="kw">NMFPois</span>(M,<span class="dv">3</span>)</span>
-<span id="cb8-2"><a href="#cb8-2"></a>initial.fit<span class="op">$</span>P</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>initial.fit =<span class="st"> </span><span class="kw">NMFPois</span>(M,<span class="dv">3</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>initial.fit<span class="op">$</span>P</span></code></pre></div>
 <pre><code>##             [,1]        [,2]       [,3]
-## [1,] 0.587336022 0.001625799 0.11586949
-## [2,] 0.000404262 0.100843863 0.75679534
-## [3,] 0.242121603 0.357278702 0.10229102
-## [4,] 0.170138114 0.540251637 0.02504415</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>initial.fit<span class="op">$</span>E</span></code></pre></div>
-<pre><code>##              [,1]         [,2]      [,3]      [,4]      [,5]      [,6]
-## [1,] 35.860757630 4.820744e-06 35.125805 48.554818 16.039953  7.001502
-## [2,] 30.134857608 2.347421e+01  5.963967  1.845300 33.500611 32.402044
-## [3,]  0.004384761 1.652579e+01 38.910228  7.599882  4.459436 10.596455</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>initial.fit<span class="op">$</span>P<span class="op">%*%</span>initial.fit<span class="op">$</span>E <span class="co">#approximation of M</span></span></code></pre></div>
-<pre><code>##           [,1]      [,2]     [,3]      [,4]      [,5]      [,6]
-## [1,] 21.111816  1.953002 25.14886 29.401588  9.992020  5.392719
-## [2,]  3.056731 14.873868 30.06271  5.957271  6.759696 11.289725
-## [3,] 19.449655 10.077275 14.61568 13.192856 16.308834 14.355697
-## [4,] 22.381798 13.095855 10.17275  9.448284 20.939450 18.961859</code></pre>
+## [1,] 0.604677969 0.004169401 0.09941958
+## [2,] 0.002446987 0.087533755 0.69396933
+## [3,] 0.236985533 0.361209420 0.12812154
+## [4,] 0.155889510 0.547087424 0.07848955</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>initial.fit<span class="op">$</span>E</span></code></pre></div>
+<pre><code>##            [,1]         [,2]      [,3]      [,4]      [,5]      [,6]
+## [1,] 34.6389759 5.916197e-06 34.524073 47.276122 15.390109  6.676336
+## [2,] 30.9870137 2.124696e+01  2.606502  2.639115 33.098457 30.987382
+## [3,]  0.3740105 1.875304e+01 42.869424  8.084763  5.511435 12.336282</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>initial.fit<span class="op">$</span>P<span class="op">%*%</span>initial.fit<span class="op">$</span>E <span class="co">#approximation of M</span></span></code></pre></div>
+<pre><code>##           [,1]     [,2]     [,3]      [,4]      [,5]     [,6]
+## [1,] 21.111807  1.95301 25.14887 29.401616  9.992005  5.39270
+## [2,]  3.056723 14.87386 30.06270  5.957273  6.759658 11.28978
+## [3,] 19.449656 10.07727 14.61570 13.192862 16.308841 14.35567
+## [4,] 22.381814 13.09586 10.17273  9.448248 20.939496 18.96185</code></pre>
 <p>Now, as an initial solution has been constructed one can find the <span class="math inline">\(SFS\)</span> with the function . Here, we just need the initial solutions of <span class="math inline">\(P\)</span> and <span class="math inline">\(E\)</span>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>sfs.result =<span class="st"> </span><span class="kw">sampleSFS</span>(initial.fit<span class="op">$</span>P,initial.fit<span class="op">$</span>E) </span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>sfs.result =<span class="st"> </span><span class="kw">sampleSFS</span>(initial.fit<span class="op">$</span>P,initial.fit<span class="op">$</span>E) </span></code></pre></div>
 <p>The results of the SFS can now be illustated by the function  function by setting the whole output from sampleSFS as input.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">plotSFS</span>(sfs.result)</span></code></pre></div>
-<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>plots =<span class="st"> </span><span class="kw">plotSFS</span>(sfs.result)</span>
+<span id="cb13-2"><a href="#cb13-2"></a>plots<span class="op">$</span>Pplot</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>plots<span class="op">$</span>Eplot</span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
 </div>
 </div>
 

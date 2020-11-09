@@ -1,8 +1,8 @@
 ---
 title: "SFS package"
 author: "Ragnhild Laursen"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+date: "09/11/2020"
+output: markdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{introduction.Rmd}
   %\VignetteEngine{knitr::rmarkdown}
@@ -27,13 +27,12 @@ The package includes the following functions:
 - `plotSFS` will plot the SFS  
 - `samplesToSVD` will transform SFS solutions from `sampleSFS` relative to SVD solution
 
-
 # Workflow of the package
 
 ## Installation 
 
 The following packages are used in the package \textbf{SFS} and do therefore need to be installed.
-```{r, eval = F}
+```r
 install.packages("devtools")
 install.packages("SQUAREM")
 install.packages("ggplot2")
@@ -44,7 +43,7 @@ devtools::install_github("ragnhildlaursen/SFS")
 
 The most simple way to install the package is using the package \textbf{devtools}.
 
-```{r}
+```r
 library(devtools)
 library(SQUAREM)
 library(ggplot2)
@@ -55,7 +54,7 @@ library(SFS)
 
 ## Example of how to use functions
 To illustrate the functions let us assume we have given a matrix of data $M (4 \times 6)$
-```{r}
+```r
 
 M = matrix(c(20, 3, 24, 19,  2, 15, 
              9, 14, 25, 30, 15, 10,
@@ -66,7 +65,7 @@ M = matrix(c(20, 3, 24, 19,  2, 15,
 
 First, we need to create an initial NMF solution which is made using the function \texttt{NMFPois}. The input for this function is a matrix $M$ and a rank $N$, that we here choose to be $3$.
 
-```{r}
+```r
 initial.fit = NMFPois(M,3)
 initial.fit$P
 initial.fit$E
@@ -75,14 +74,14 @@ initial.fit$P%*%initial.fit$E #approximation of M
 
 Now, as an initial solution has been constructed one can find the $SFS$ with the function \texttt{sampleSFS}. Here, we just need the initial solutions of $P$ and $E$. 
 
-```{r}
+```r
 sfs.result = sampleSFS(initial.fit$P,initial.fit$E) 
 
 ```
 
 The results of the SFS can now be illustated by the function \texttt{plotSFS} function by setting the whole output from sampleSFS as input.
 
-```{r}
+```r
 plots = plotSFS(sfs.result)
 plots$Pplot
 plots$Eplot
