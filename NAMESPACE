@@ -1,7 +1,7 @@
 useDynLib(SFS, .registration=TRUE)
 importFrom(Rcpp, evalCpp)
 exportPattern("^[[:alpha:]]+")
-importFrom(stats, reshape, time)
+importFrom(stats)
 import(SQUAREM)
 import(ggplot2)
 import(scales)

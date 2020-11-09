@@ -11,6 +11,12 @@ library(SQUAREM)
 #' 
 #' @return Generalized Kullback-Leibler
 gkl.dev <- function(y, mu){
+  if(length(y) != length(mu)){
+    stop("Different length of observations and their estimates")
+  }
+  if(any(y < 0 | mu < 0)){
+    stop("The input cannot be negative")
+  }
   r <- mu
   p <- which(y > 0)
   r[p] <- (y * (log(y)- log(mu)) - y + mu)[p]
@@ -35,7 +41,11 @@ gkl.dev <- function(y, mu){
 #'  \item E   - Non-negative matrix of dimension K x nrow(V), where rows sum to one 
 #'  \item gkl - Smallest Value of the Generalized Kullback-Leibler
 #'  }
-NMFPois = function(M,N,seed = sample(1:100,3), arrange = TRUE, tol = 1e-5){
+NMFPois = function(M, N, seed = sample(1:100,3), arrange = TRUE, tol = 1e-5){
+  if(any(M < 0) || N < 0 ){
+    stop("The data matrix and/or rank cannot be negative.")
+  }
+  
   K <- dim(M)[1]  # mutations
   G <- dim(M)[2]  # patients
   
@@ -92,7 +102,7 @@ NMFPois = function(M,N,seed = sample(1:100,3), arrange = TRUE, tol = 1e-5){
     reslist[[i]] = sres
   }
   
-  best <- which.min(div) # Smallest GKLD value
+  best <- which.min(div) # smallest GKLD value
   P = Plist[[best]]
   E = Elist[[best]]
   

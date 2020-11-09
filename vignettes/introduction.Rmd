@@ -21,7 +21,7 @@ are new solutions. There exist trivial ambiguities where $A$ is either a diagona
 
 The package includes the following functions:
 \begin{itemize}
-\item \texttt{sampleSFS} is the main function that can find the SFS from an inital NMF
+\item \texttt{sampleSFS} is the main function that can find the SFS from an initial NMF
 \item \texttt{NMFPois} can find an initial NMF solution from a data matrix
 \item \texttt{gkl.dev} is an internal function for \texttt{NMFPois}, that calculates the generalized Kullback-Leibler
 \item \texttt{plotSFS} will plot the SFS  
@@ -33,28 +33,30 @@ The package includes the following functions:
 ## Installation 
 
 The following packages are used in the package \textbf{SFS} and do therefore need to be installed.
-```{r, eval = FALSE}
+```{r, eval = F}
 install.packages("devtools")
 install.packages("SQUAREM")
 install.packages("ggplot2")
-install.packages("ggpubr")
 install.packages("Rcpp")
 install.packages("RcppArmadillo")
+devtools::install_github("ragnhildlaursen/SFS")
 ```
 
 The most simple way to install the package is using the package \textbf{devtools}.
 
-```{r,eval = FALSE}
+```{r}
 library(devtools)
+library(SQUAREM)
+library(ggplot2)
 library(Rcpp)
 library(RcppArmadillo)
-devtools::install_github("ragnhildlaursen/SFS")
 library(SFS)
 ```
 
 ## Example of how to use functions
 To illustrate the functions let us assume we have given a matrix of data $M (4 \times 6)$
 ```{r}
+
 M = matrix(c(20, 3, 24, 19,  2, 15, 
              9, 14, 25, 30, 15, 10,
              30, 6, 12, 10, 11,  7,

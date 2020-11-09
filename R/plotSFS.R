@@ -75,5 +75,4 @@ plotSFS = function(sampleSFSOutput){
   Output$Eplot = g2
   
   return(Output)
-  
 }
