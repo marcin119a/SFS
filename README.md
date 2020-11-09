@@ -1,13 +1,3 @@
----
-title: "SFS package"
-author: "Ragnhild Laursen"
-date: "09/11/2020"
-output: markdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{introduction.Rmd}
-  %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
----
 # Introduction
 This package is developed for a new sampling algorithm to find the set of feasible solutions(SFS) from an initial solution of non-negative matrix factorization(NMF). Remember, non-negative matrix factorization takes a non-negative matrix $M(K \times G)$ and approximates it by two other non-negative matrices $P(K \times N)$ and $E(N \times G)$ such that
 \begin{equation*}
@@ -32,6 +22,7 @@ The package includes the following functions:
 ## Installation 
 
 The following packages are used in the package \textbf{SFS} and do therefore need to be installed.
+
 ```r
 install.packages("devtools")
 install.packages("SQUAREM")
