@@ -1,26 +1,17 @@
----
-title: "SFS package"
-author: "Ragnhild Laursen"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{introduction.Rmd}
-  %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
----
-
 # Introduction
-This package is developed for a new sampling algorithm to find the set of feasible solutions(SFS) from an initial solution of non-negative matrix factorization(NMF). Remember, non-negative matrix factorization takes a non-negative matrix `M(K x G)` and approximates it by two other non-negative matrices $P(K \times N)$ and $E(N \times G)$ such that
+This package is developed for a new sampling algorithm to find the set of feasible solutions(SFS) from an initial solution of non-negative matrix factorization(NMF). Remember, non-negative matrix factorization takes a non-negative matrix **M(K x G)** and approximates it by two other non-negative matrices **P(K x N)** and **E(N x G)** such that
 
-display(Markdown('$1.0-q \\approx 0.99,0.5,0.0$'))
-
+<dl>
 M &‌asymp; PE
+</dl>
 
-Other solutions with the same approximation could be construct with an invertible matrix $A(N \times N)$ such that 
+Other solutions with the same approximation could be construct with an invertible matrix **A(N x N)** such that 
+
 \begin{equation*}
     \tilde{P} = PA \geq 0 \quad \tilde{E} = A^{-1}E \geq 0,
 \end{equation*}
-are new solutions. There exist trivial ambiguities where $A$ is either a diagonal matrix or a permutation matrix, but besides these trivial ambiguities others could exist as well. The scaling ambiguity is removed by assuming the columns of $P$ sum to one. The goal of the main function `sampleSFS()` in this package is to approximate the whole SFS that exist for $P$ and $E$ besides the ambiguities. The advantage of this algorithm is that is has a simple implementation and can be applied for an arbitrary dimension of $N$. A further desciption can be found in the corresponding paper \textit{R. Laursen and A. Hobolth, A sampling algorithm to compute the set of feasible solutions for non-negative matrix factorization for an arbitrary rank.}.
+
+are new solutions. There exist trivial ambiguities where **A** is either a diagonal matrix or a permutation matrix, but besides these trivial ambiguities others could exist as well. The scaling ambiguity is removed by assuming the columns of **P** sum to one. The goal of the main function `sampleSFS` in this package is to approximate the whole SFS that exist for **P** and **E** besides the ambiguities. The advantage of this algorithm is that is has a simple implementation and can be applied for an arbitrary dimension of **N**. A further desciption can be found in the corresponding paper *R. Laursen and A. Hobolth, A sampling algorithm to compute the set of feasible solutions for non-negative matrix factorization with an arbitrary rank.*.
 
 The package includes the following functions:
 
@@ -34,7 +25,7 @@ The package includes the following functions:
 
 ## Installation 
 
-The following packages are used in the package \textbf{SFS} and do therefore need to be installed.
+The following packages are used in the package ** `SFS` ** and do therefore need to be installed.
 
 ```r
 install.packages("devtools")
@@ -45,7 +36,7 @@ install.packages("RcppArmadillo")
 devtools::install_github("ragnhildlaursen/SFS")
 ```
 
-The most simple way to install the package is using the package \textbf{devtools}.
+The most simple way to install the package is using the package ** `devtools` **.
 
 ```r
 library(devtools)
@@ -57,7 +48,7 @@ library(SFS)
 ```
 
 ## Example of how to use functions
-To illustrate the functions let us assume we have given a matrix of data $M (4 \times 6)$
+To illustrate the functions let us assume we have given a matrix of data **M (4 x 6)**
 ```r
 
 M = matrix(c(20, 3, 24, 19,  2, 15, 
@@ -67,7 +58,7 @@ M = matrix(c(20, 3, 24, 19,  2, 15,
            nrow = 4, ncol = 6)
 ```
 
-First, we need to create an initial NMF solution which is made using the function \texttt{NMFPois}. The input for this function is a matrix $M$ and a rank $N$, that we here choose to be $3$.
+First, we need to create an initial NMF solution which is made using the function `NMFPois`. The input for this function is a matrix **M** and a rank **N**, that we here choose to be **3**.
 
 ```r
 initial.fit = NMFPois(M,3)
@@ -76,14 +67,14 @@ initial.fit$E
 initial.fit$P%*%initial.fit$E #approximation of M
 ```
 
-Now, as an initial solution has been constructed one can find the $SFS$ with the function \texttt{sampleSFS}. Here, we just need the initial solutions of $P$ and $E$. 
+Now, as an initial solution has been constructed one can find the **SFS** with the function `sampleSFS`. Here, we just need the initial solutions of **P** and **E**. 
 
 ```r
 sfs.result = sampleSFS(initial.fit$P,initial.fit$E) 
 
 ```
 
-The results of the SFS can now be illustated by the function \texttt{plotSFS} function by setting the whole output from sampleSFS as input.
+The results of the SFS can now be illustated by the function `plotSFS` function by setting the whole output from `sampleSFS` as input.
 
 ```r
 plots = plotSFS(sfs.result)
