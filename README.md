@@ -1,9 +1,7 @@
 # Introduction
-This package is developed for a new sampling algorithm to find the set of feasible solutions(SFS) from an initial solution of non-negative matrix factorization(NMF). Remember, non-negative matrix factorization takes a non-negative matrix **M(K x G)** and approximates it by two other non-negative matrices **P(K x N)** and **E(N x G)** such that
+This package is developed for a new sampling algorithm to find the set of feasible solutions (SFS) from an initial solution of non-negative matrix factorization (NMF). Remember, non-negative matrix factorization takes a non-negative matrix **M(K x G)** and approximates it by two other non-negative matrices **P(K x N)** and **E(N x G)** such that
 
-<dl>
-M &‌asymp; PE
-</dl>
+$$M \approx PE $$
 
 Other solutions with the same approximation could be construct with an invertible matrix **A(N x N)** such that 
 
