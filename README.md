@@ -1,3 +1,11 @@
+latex input:    mmd-article-header  
+Title:          SFS package  
+latex input:    mmd-article-begin-doc  
+latex footer:   mmd-memoir-footer  
+HTML header:    <script type="text/javascript"
+                src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+                </script>
+
 # Introduction
 This package is developed for a new sampling algorithm to find the set of feasible solutions (SFS) from an initial solution of non-negative matrix factorization (NMF). Remember, non-negative matrix factorization takes a non-negative matrix **M(K x G)** and approximates it by two other non-negative matrices **P(K x N)** and **E(N x G)** such that
 
