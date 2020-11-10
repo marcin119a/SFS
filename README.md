@@ -1,15 +1,26 @@
-latex input:    mmd-article-header  
-Title:          SFS package  
-latex input:    mmd-article-begin-doc  
-latex footer:   mmd-memoir-footer  
-HTML header:    <script type="text/javascript"
-                src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-                </script>
+$ npm install mathpix-markdown-it
+$ yarn add mathpix-markdown-it
 
-# Introduction
+import {MathpixMarkdown, MathpixLoader} from 'mathpix-markdown-it';
+
+
+class App extends Component {
+  render() {
+    return (
+      <MathpixLoader>
+          <MathpixMarkdown text="\\(ax^2 + bx + c = 0\\)"/>
+          <MathpixMarkdown text="$x = \frac { - b \pm \sqrt { b ^ { 2 } - 4 a c } } { 2 a }$"/>
+          ...
+      </MathpixLoader>
+    );
+  }
+}
+
+# SFS Package
+## Introduction
 This package is developed for a new sampling algorithm to find the set of feasible solutions (SFS) from an initial solution of non-negative matrix factorization (NMF). Remember, non-negative matrix factorization takes a non-negative matrix **M(K x G)** and approximates it by two other non-negative matrices **P(K x N)** and **E(N x G)** such that
 
-$$M \approx PE $$
+$$M \approx PE$$
 
 Other solutions with the same approximation could be construct with an invertible matrix **A(N x N)** such that 
 
@@ -27,9 +38,9 @@ The package includes the following functions:
 - `plotSFS` will plot the SFS  
 - `samplesToSVD` will transform SFS solutions from `sampleSFS` relative to SVD solution
 
-# Workflow of the package
+## Workflow of the package
 
-## Installation 
+### Installation 
 
 The following packages are used in the package ** `SFS` ** and do therefore need to be installed.
 
@@ -53,7 +64,7 @@ library(RcppArmadillo)
 library(SFS)
 ```
 
-## Example of how to use functions
+### Example of how to use functions
 To illustrate the functions let us assume we have given a matrix of data **M (4 x 6)**
 ```r
 
