@@ -1,13 +1,24 @@
-# Introduction
-This package is developed for a new sampling algorithm to find the set of feasible solutions(SFS) from an initial solution of non-negative matrix factorization(NMF). Remember, non-negative matrix factorization takes a non-negative matrix `\(M(K x G)\)` and approximates it by two other non-negative matrices $P(K \times N)$ and $E(N \times G)$ such that
+---
+title: "SFS package"
+author: "Ragnhild Laursen"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{introduction.Rmd}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
 
-`M &‌asymp PE.`
+# Introduction
+This package is developed for a new sampling algorithm to find the set of feasible solutions(SFS) from an initial solution of non-negative matrix factorization(NMF). Remember, non-negative matrix factorization takes a non-negative matrix `M(K x G)` and approximates it by two other non-negative matrices $P(K \times N)$ and $E(N \times G)$ such that
+
+M &‌asymp; PE
 
 Other solutions with the same approximation could be construct with an invertible matrix $A(N \times N)$ such that 
 \begin{equation*}
     \tilde{P} = PA \geq 0 \quad \tilde{E} = A^{-1}E \geq 0,
 \end{equation*}
-are new solutions. There exist trivial ambiguities where $A$ is either a diagonal matrix or a permutation matrix, but besides these trivial ambiguities others could exist as well. The scaling ambiguity is removed by assuming the columns of $P$ sum to one. The goal of the main function \texttt{sampleSFS()} in this package is to approximate the whole SFS that exist for $P$ and $E$ besides the ambiguities. The advantage of this algorithm is that is has a simple implementation and can be applied for an arbitrary dimension of $N$. A further desciption can be found in the corresponding paper \textit{R. Laursen and A. Hobolth, A sampling algorithm to compute the set of feasible solutions for non-negative matrix factorization for an arbitrary rank.}.
+are new solutions. There exist trivial ambiguities where $A$ is either a diagonal matrix or a permutation matrix, but besides these trivial ambiguities others could exist as well. The scaling ambiguity is removed by assuming the columns of $P$ sum to one. The goal of the main function `sampleSFS()` in this package is to approximate the whole SFS that exist for $P$ and $E$ besides the ambiguities. The advantage of this algorithm is that is has a simple implementation and can be applied for an arbitrary dimension of $N$. A further desciption can be found in the corresponding paper \textit{R. Laursen and A. Hobolth, A sampling algorithm to compute the set of feasible solutions for non-negative matrix factorization for an arbitrary rank.}.
 
 The package includes the following functions:
 
