@@ -1,32 +1,13 @@
-$ npm install mathpix-markdown-it
-$ yarn add mathpix-markdown-it
-
-import {MathpixMarkdown, MathpixLoader} from 'mathpix-markdown-it';
-
-
-class App extends Component {
-  render() {
-    return (
-      <MathpixLoader>
-          <MathpixMarkdown text="\\(ax^2 + bx + c = 0\\)"/>
-          <MathpixMarkdown text="$x = \frac { - b \pm \sqrt { b ^ { 2 } - 4 a c } } { 2 a }$"/>
-          ...
-      </MathpixLoader>
-    );
-  }
-}
 
 # SFS Package
 ## Introduction
 This package is developed for a new sampling algorithm to find the set of feasible solutions (SFS) from an initial solution of non-negative matrix factorization (NMF). Remember, non-negative matrix factorization takes a non-negative matrix **M(K x G)** and approximates it by two other non-negative matrices **P(K x N)** and **E(N x G)** such that
 
-$$M \approx PE$$
+**M = PE**
 
 Other solutions with the same approximation could be construct with an invertible matrix **A(N x N)** such that 
 
-\begin{equation*}
-    \tilde{P} = PA \geq 0 \quad \tilde{E} = A^{-1}E \geq 0,
-\end{equation*}
+**\tilde{P} = PA \geq 0     \quad     \tilde{E} = A^{-1}E \geq 0,**
 
 are new solutions. There exist trivial ambiguities where **A** is either a diagonal matrix or a permutation matrix, but besides these trivial ambiguities others could exist as well. The scaling ambiguity is removed by assuming the columns of **P** sum to one. The goal of the main function `sampleSFS` in this package is to approximate the whole SFS that exist for **P** and **E** besides the ambiguities. The advantage of this algorithm is that is has a simple implementation and can be applied for an arbitrary dimension of **N**. A further desciption can be found in the corresponding paper *R. Laursen and A. Hobolth, A sampling algorithm to compute the set of feasible solutions for non-negative matrix factorization with an arbitrary rank.*.
 

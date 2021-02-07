@@ -26,8 +26,6 @@ The SVD representation of the set of feasible solutions
 \itemize{
  \item P.points - Matrix of P results as SVD solution (results x (N-1)).
  \item E.points - Matrix of E results as SVD solution (results x (N-1)).
- \item plotP - Plot of P.points
- \item plotE - Plot of E.points
  }
 }
 \description{
