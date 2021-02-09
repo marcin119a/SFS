@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{introduction.Rmd}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{knitr::knitr}
   \usepackage[utf8]{inputenc}
 ---
 # Introduction
@@ -24,7 +24,6 @@ The package includes the following functions:
 - `sampleSFS` is the main function that can find the SFS from an initial NMF
 - `NMFPois` can find an initial NMF solution from a data matrix
 - `gkl.dev` is an internal function for `NMFPois`, that calculates the generalized Kullback-Leibler
-- `plotSFS` will plot the SFS  
 - `samplesToSVD` will transform SFS solutions from `sampleSFS` relative to SVD solution
 
 
@@ -36,7 +35,6 @@ The following packages are used in the package \textbf{SFS} and do therefore nee
 ```{r, eval = F}
 install.packages("devtools")
 install.packages("SQUAREM")
-install.packages("ggplot2")
 install.packages("Rcpp")
 install.packages("RcppArmadillo")
 devtools::install_github("ragnhildlaursen/SFS")
@@ -45,9 +43,7 @@ devtools::install_github("ragnhildlaursen/SFS")
 The most simple way to install the package is using the package \textbf{devtools}.
 
 ```{r}
-library(devtools)
 library(SQUAREM)
-library(ggplot2)
 library(Rcpp)
 library(RcppArmadillo)
 library(SFS)
@@ -80,12 +76,20 @@ sfs.result = sampleSFS(initial.fit$P,initial.fit$E)
 
 ```
 
-The results of the SFS can now be illustated by the function \texttt{plotSFS} function by setting the whole output from sampleSFS as input.
+To see the results in a simple way you could plot it in the following way
 
 ```{r}
-plots = plotSFS(sfs.result)
-plots$Pplot
-plots$Eplot
+par(mfrow = c(3,1), mar = c(3,3,2,2))
+# plot of SFS for P
+for(i in 1:3){
+  barplot(rbind(sfs.result$Pminimum[i,],sfs.result$Pmaximum[i,]), col = c('grey','red'), main = paste0("SFS for column ",i, " in P"))
+}
+
+# plot of SFS for E
+for(i in 1:3){
+  barplot(rbind(sfs.result$Eminimum[i,],sfs.result$Emaximum[i,]), col = c('grey','red'), main = paste0("SFS for row ",i, " in E"))
+}
+
 ```
 
 

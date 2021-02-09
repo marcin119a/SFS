@@ -1,14 +1,15 @@
 Package: SFS
 Type: Package
 Title: Sampling the set of feasible solutions from a non-negative matrix factorization
-Version: 1.0
-Date: 2020-09-20
+Version: 1.1
+Date: 2021-02-09
 Author: Ragnhild Laursen
 Maintainer: Ragnhild Laursen <ragnhild@math.au.dk>
 Description: The package include both a function \emph{NMFPois}, that finds an initial non-negative matrix factorization(NMF) 
   and a function \emph{sampleSFS} that can recover the whole set of feasible solutions given an initial solution. 
   Other than that there is two function used for plots \emph{samplesToSVD} and \emph{plotSFS}.
 License: MIT + file LICENSE
-Imports: Rcpp (>= 1.0.5), SQUAREM, ggplot2, scales
+Imports: Rcpp (>= 1.0.5), SQUAREM
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.1.1.9000
+BuildVignettes: no
