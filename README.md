@@ -16,7 +16,6 @@ The package includes the following functions:
 - `sampleSFS` is the main function that can find the SFS from an initial NMF
 - `NMFPois` can find an initial NMF solution from a data matrix
 - `gkl.dev` is an internal function for `NMFPois`, that calculates the generalized Kullback-Leibler
-- `plotSFS` will plot the SFS  
 - `samplesToSVD` will transform SFS solutions from `sampleSFS` relative to SVD solution
 
 ## Workflow of the package
@@ -70,14 +69,6 @@ Now, as an initial solution has been constructed one can find the **SFS** with t
 ```r
 sfs.result = sampleSFS(initial.fit$P,initial.fit$E) 
 
-```
-
-The results of the SFS can now be illustated by the function `plotSFS` function by setting the whole output from `sampleSFS` as input.
-
-```r
-plots = plotSFS(sfs.result)
-plots$Pplot
-plots$Eplot
 ```
 
 

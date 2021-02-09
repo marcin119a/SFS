@@ -7,7 +7,7 @@ Author: Ragnhild Laursen
 Maintainer: Ragnhild Laursen <ragnhild@math.au.dk>
 Description: The package include both a function \emph{NMFPois}, that finds an initial non-negative matrix factorization(NMF) 
   and a function \emph{sampleSFS} that can recover the whole set of feasible solutions given an initial solution. 
-  Other than that there is two function used for plots \emph{samplesToSVD} and \emph{plotSFS}.
+  Other than that there is a function used to convert the results into SVD representtion \emph{samplesToSVD}.
 License: MIT + file LICENSE
 Imports: Rcpp (>= 1.0.5), SQUAREM
 LinkingTo: Rcpp, RcppArmadillo
