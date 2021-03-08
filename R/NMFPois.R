@@ -61,11 +61,11 @@ NMFPois = function(M, N, seed = sample(1:100,3), arrange = TRUE, tol = 1e-5){
     
     PE <- P%*%E
     P <- P * ((M/PE) %*% t(E))      # update of signatures
-    P <- P %*% diag(1/rowSums(E))   
+    P <- t(t(P) * 1/rowSums(E))   
     
     PE <- P%*%E
     E <- E * (t(P) %*% (M/PE))      # update of exposures
-    E <- diag(1/colSums(P)) %*% E
+    E <- 1/colSums(P) * E
     
     par = c(as.vector(P),as.vector(E))
     par[par <= 0] = 1e-10
@@ -93,8 +93,8 @@ NMFPois = function(M, N, seed = sample(1:100,3), arrange = TRUE, tol = 1e-5){
     
     P = matrix(exp(sres$par[1:(K*N)]), nrow = K, ncol = N)
     E = matrix(exp(sres$par[-c(1:(K*N))]), nrow = N, ncol = G)
-    E = diag(colSums(P)) %*% E # normalizing 
-    P = P %*% diag(1/colSums(P))
+    E = colSums(P) * E # normalizing 
+    P = t(t(P) * 1/colSums(P))
     
     Plist[[i]] <- P # signatures
     Elist[[i]] <- E # exposures
