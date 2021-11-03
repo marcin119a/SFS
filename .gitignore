@@ -2,3 +2,4 @@
 .Rbuildignore
 .Rhistory
 SFS.Rproj
+inst/doc

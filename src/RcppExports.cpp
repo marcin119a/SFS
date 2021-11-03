@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // sampleSFS
 Rcpp::List sampleSFS(arma::mat P, arma::mat E, int maxIter, int check, double beta, double eps);
 RcppExport SEXP _SFS_sampleSFS(SEXP PSEXP, SEXP ESEXP, SEXP maxIterSEXP, SEXP checkSEXP, SEXP betaSEXP, SEXP epsSEXP) {

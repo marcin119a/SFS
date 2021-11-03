@@ -1,14 +1,19 @@
 ---
-title: "SFS package"
-author: "Ragnhild Laursen"
-date: "`r Sys.Date()`"
+title: "SFS introduction"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{introduction.Rmd}
+  %\VignetteIndexEntry{SFS_introduction}
   %\VignetteEngine{knitr::knitr}
-  \usepackage[utf8]{inputenc}
+  %\VignetteEncoding{UTF-8}
 ---
-# Introduction
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
 This package is developed for a new sampling algorithm to find the set of feasible solutions(SFS) from an initial solution of non-negative matrix factorization(NMF). Remember, non-negative matrix factorization takes a non-negative matrix $M(K \times G)$ and approximates it by two other non-negative matrices $P(K \times N)$ and $E(N \times G)$ such that
 \begin{equation*}
 M \approx PE.
@@ -37,10 +42,14 @@ install.packages("devtools")
 install.packages("SQUAREM")
 install.packages("Rcpp")
 install.packages("RcppArmadillo")
-devtools::install_github("ragnhildlaursen/SFS")
 ```
 
 The most simple way to install the package is using the package \textbf{devtools}.
+
+```{r, eval = F}
+library(devtools)
+devtools::install_github("ragnhildlaursen/SFS")
+```
 
 ```{r}
 library(SQUAREM)
@@ -63,42 +72,32 @@ M = matrix(c(20, 3, 24, 19,  2, 15,
 First, we need to create an initial NMF solution which is made using the function \texttt{NMFPois}. The input for this function is a matrix $M$ and a rank $N$, that we here choose to be $3$.
 
 ```{r}
-initial.fit = NMFPois(M,3)
-initial.fit$P
-initial.fit$E
-initial.fit$P%*%initial.fit$E #approximation of M
+rank = 3
+initial_fit = NMFPois(M,rank)
+initial_fit$P
+initial_fit$E
+initial_fit$P%*%initial_fit$E #approximation of M
 ```
 
 Now, as an initial solution has been constructed one can find the $SFS$ with the function \texttt{sampleSFS}. Here, we just need the initial solutions of $P$ and $E$. 
 
 ```{r}
-sfs.result = sampleSFS(initial.fit$P,initial.fit$E) 
+sfs.result = sampleSFS(initial_fit$P,initial_fit$E) 
 
 ```
 
 To see the results in a simple way you could plot it in the following way
 
 ```{r}
-par(mfrow = c(3,1), mar = c(3,3,2,2))
+par(mfrow = c(rank,1), mar = c(3,3,2,2))
 # plot of SFS for P
-for(i in 1:3){
+for(i in 1:rank){
   barplot(rbind(sfs.result$Pminimum[i,],sfs.result$Pmaximum[i,]), col = c('grey','red'), main = paste0("SFS for column ",i, " in P"))
 }
 
 # plot of SFS for E
-for(i in 1:3){
+for(i in 1:rank){
   barplot(rbind(sfs.result$Eminimum[i,],sfs.result$Emaximum[i,]), col = c('grey','red'), main = paste0("SFS for row ",i, " in E"))
 }
 
 ```
-
-
-
-
-
-
-
-
-
-
-

@@ -11,5 +11,7 @@ Description: The package include both a function \emph{NMFPois}, that finds an i
 License: MIT + file LICENSE
 Imports: Rcpp (>= 1.0.5), SQUAREM
 LinkingTo: Rcpp, RcppArmadillo
-RoxygenNote: 7.1.1.9000
-BuildVignettes: no
+Suggests: 
+    rmarkdown,
+    knitr
+VignetteBuilder: knitr
