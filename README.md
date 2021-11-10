@@ -21,26 +21,10 @@ The package includes the following functions:
 ## Workflow of the package
 
 ### Installation 
-
-The following packages are used in the package ** `SFS` ** and do therefore need to be installed.
-
-```r
-install.packages("devtools")
-install.packages("SQUAREM")
-install.packages("ggplot2")
-install.packages("Rcpp")
-install.packages("RcppArmadillo")
-devtools::install_github("ragnhildlaursen/SFS")
-```
-
 The most simple way to install the package is using the package ** `devtools` **.
 
 ```r
-library(devtools)
-library(SQUAREM)
-library(ggplot2)
-library(Rcpp)
-library(RcppArmadillo)
+devtools::install_github("ragnhildlaursen/SFS")
 library(SFS)
 ```
 

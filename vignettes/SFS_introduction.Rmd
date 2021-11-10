@@ -36,26 +36,12 @@ The package includes the following functions:
 
 ## Installation 
 
-The following packages are used in the package \textbf{SFS} and do therefore need to be installed.
-```{r, eval = F}
-install.packages("devtools")
-install.packages("SQUAREM")
-install.packages("Rcpp")
-install.packages("RcppArmadillo")
-```
-
 The most simple way to install the package is using the package \textbf{devtools}.
 
 ```{r, eval = F}
-library(devtools)
 devtools::install_github("ragnhildlaursen/SFS")
-```
-
-```{r}
-library(SQUAREM)
-library(Rcpp)
-library(RcppArmadillo)
 library(SFS)
+
 ```
 
 ## Example of how to use functions
