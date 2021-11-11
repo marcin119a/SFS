@@ -1,7 +1,5 @@
 #' @import SQUAREM
 
-library(SQUAREM)
-
 #' Function for calculating the generalised Kullback Leibler divergence
 #' 
 #' Internal function used in NMFPois
