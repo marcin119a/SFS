@@ -58,8 +58,8 @@ def samplesToSVD(Presults: np.ndarray, Eresults: np.ndarray, N: int,
     
     # Perform SVD on Mfit
     svd_Mfit = np.linalg.svd(Mfit.T, full_matrices=False)
-    svdV = svd_Mfit[2].T  # v matrix
-    svdU = svd_Mfit[0]    # u matrix
+    svdV = svd_Mfit[2].T  # v matrix (G x N)
+    svdU = svd_Mfit[0]    # u matrix (K x N)
     
     # Initialize output matrices
     P_points = np.zeros((Presults.shape[0], N - 1))
@@ -67,16 +67,16 @@ def samplesToSVD(Presults: np.ndarray, Eresults: np.ndarray, N: int,
     
     # Process each result
     for i in range(n_results):
-        # Get P and E for this result
-        p = Presults[i*N:(i+1)*N, :].T
-        e = Eresults[i*N:(i+1)*N, :]
+        # Get P and E for this result (following R indexing)
+        p = Presults[i*N:(i+1)*N, :]  # N x K (not transposed!)
+        e = Eresults[i*N:(i+1)*N, :]  # N x G
         
-        # Find Tmat for P
+        # Find Tmat for P: p @ svdV should be N x N
         Tmat_p = p @ svdV
         Tmat_p = Tmat_p / Tmat_p[:, 0:1]  # normalize by first column
-        P_points[i*N:(i+1)*N, :] = Tmat_p[:, 1:N].T
+        P_points[i*N:(i+1)*N, :] = Tmat_p[:, 1:N]
         
-        # Find Tmat for E
+        # Find Tmat for E: e @ svdU should be N x N
         Tmat_e = e @ svdU
         Tmat_e = Tmat_e / Tmat_e[:, 0:1]  # normalize by first column
         E_points[i*N:(i+1)*N, :] = Tmat_e[:, 1:N]

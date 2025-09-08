@@ -136,8 +136,8 @@ def NMFPois(M: np.ndarray, N: int, seed: Optional[List[int]] = None,
         
         P = np.exp(result.x[:K*N]).reshape(K, N)
         E = np.exp(result.x[K*N:]).reshape(N, G)
-        E = np.sum(P, axis=0) * E  # normalizing
-        P = P / np.sum(P, axis=0)
+        E = np.sum(P, axis=0)[:, np.newaxis] * E  # normalizing
+        P = P / np.sum(P, axis=0)[np.newaxis, :]
         
         Plist.append(P)
         Elist.append(E)
