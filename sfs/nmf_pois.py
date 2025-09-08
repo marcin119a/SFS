@@ -158,3 +158,96 @@ def NMFPois(M: np.ndarray, N: int, seed: Optional[List[int]] = None,
         'E': E,
         'gkl': div[best]
     }
+
+
+def refit_NMF(M: np.ndarray, P: np.ndarray, seed: Optional[int] = None, 
+               tol: float = 1e-5) -> Dict[str, np.ndarray]:
+    """
+    Refit NMF with fixed signature matrix P to find exposure matrix E.
+    
+    Given a fixed signature matrix P and data matrix M, this function finds
+    the optimal exposure matrix E that minimizes the Generalized Kullback-Leibler
+    divergence between M and P @ E.
+    
+    Parameters
+    ----------
+    M : np.ndarray
+        Non-negative data matrix (mutations x samples)
+    P : np.ndarray
+        Fixed signature matrix (mutations x signatures)
+    seed : int, optional
+        Random seed for initialization
+    tol : float, default 1e-5
+        Convergence tolerance
+        
+    Returns
+    -------
+    dict
+        Dictionary containing:
+        - P : np.ndarray - The input signature matrix (unchanged)
+        - E : np.ndarray - Optimized exposure matrix (signatures x samples)
+        - gkl : float - Final GKLD value
+        
+    Raises
+    ------
+    ValueError
+        If matrices have incompatible dimensions
+    """
+    if np.any(M < 0) or np.any(P < 0):
+        raise ValueError("Matrices M and P must be non-negative.")
+    
+    K = M.shape[0]  # mutations
+    G = M.shape[1]  # samples
+    N = P.shape[1]  # signatures
+    
+    if P.shape[0] != K:
+        raise ValueError(f"P matrix must have {K} rows (mutations), got {P.shape[0]}")
+    
+    if seed is not None:
+        np.random.seed(seed)
+    
+    # Initialize E randomly
+    E = np.random.rand(N, G)
+    
+    def gkl_obj_e(e_flat):
+        """Objective function for E optimization"""
+        E = e_flat.reshape(N, G)
+        E[E <= 0] = 1e-10  # ensure non-negativity
+        
+        # Calculate PE = P @ E
+        PE = P @ E
+        
+        # Calculate GKLD
+        GKL = gkl_dev(M.flatten(), PE.flatten())
+        return GKL
+    
+    def gkl_grad_e(e_flat):
+        """Gradient of GKLD with respect to E"""
+        E = e_flat.reshape(N, G)
+        E[E <= 0] = 1e-10
+        
+        # Calculate PE = P @ E
+        PE = P @ E
+        
+        # Gradient calculation
+        # dGKL/dE = P^T * (1 - M/PE)
+        grad = P.T @ (1 - M / PE)
+        
+        return grad.flatten()
+    
+    # Optimize E using L-BFGS-B
+    result = minimize(gkl_obj_e, E.flatten(), method='L-BFGS-B',
+                     jac=gkl_grad_e, bounds=[(1e-10, None)] * (N * G),
+                     options={'ftol': tol})
+    
+    E_opt = result.x.reshape(N, G)
+    E_opt[E_opt <= 0] = 1e-10
+    
+    # Normalize E so that rows sum to 1
+    E_opt = E_opt / np.sum(E_opt, axis=1, keepdims=True)
+    
+    return {
+        'P': P,
+        'E': E_opt,
+        'gkl': result.fun
+    }
